@@ -9,6 +9,10 @@ import (
 	_adminController "go-watchlist/controllers/admins"
 	_adminRepo "go-watchlist/drivers/databases/admins"
 
+	_userService "go-watchlist/business/users"
+	_userController "go-watchlist/controllers/users"
+	_userRepo "go-watchlist/drivers/databases/users"
+
 	_dbDriver "go-watchlist/drivers/mysql"
 
 	_middleware "go-watchlist/app/middlewares"
@@ -34,6 +38,7 @@ func init() {
 func dbMigrate(db *gorm.DB) {
 	db.AutoMigrate(
 		&_adminRepo.Admins{},
+		&_userRepo.Users{},
 	)
 }
 
@@ -60,8 +65,13 @@ func main() {
 	adminService := _adminService.NewAdminService(adminRepo, 10, &configJWT)
 	adminCtrl := _adminController.NewAdminController(adminService)
 
+	userRepo := _driverFactory.NewUserRepository(db)
+	userService := _userService.NewUserService(userRepo, 10, &configJWT)
+	userCtrl := _userController.NewUserController(userService)
+
 	routesInit := _routes.ControllerList{
 		AdminController: *adminCtrl,
+		UserController:  *userCtrl,
 	}
 
 	routesInit.RouteRegister(e)
