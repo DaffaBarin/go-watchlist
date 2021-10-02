@@ -1,55 +1,67 @@
 package admins
 
 import (
-	"context"
-	"errors"
 	"time"
+
+	"go-watchlist/app/middlewares"
+	"go-watchlist/business"
+	"go-watchlist/helper/encrypt"
 )
 
 type AdminService struct {
-	repository           Repository
+	repository     Repository
 	contextTimeout time.Duration
+	jwtAuth        *middlewares.ConfigJWT
 }
 
-func NewAdminService(repo Repository, timeout time.Duration) Service {
+func NewAdminService(repo Repository, timeout time.Duration, jwtauth *middlewares.ConfigJWT) Service {
 	return &AdminService{
 		repository:     repo,
 		contextTimeout: timeout,
+		jwtAuth:        jwtauth,
 	}
 }
 
 // Business logic for register and login
-func (servAdmin *AdminService) Login(ctx context.Context, email string, password string) (Domain, error) {
-	if email == "" {
-		return Domain{}, errors.New("username empty")
+func (servAdmin *AdminService) Login(username, password string) (Domain, error) {
+	if username == "" {
+		return Domain{}, business.ErrUsernameNotFound
 	}
 	if password == "" {
-		return Domain{}, errors.New("password empty")
+		return Domain{}, business.ErrPasswordNotFound
 	}
 
-	admin, err := servAdmin.repository.Login(ctx, email, password)
-
+	admin, err := servAdmin.repository.Login(username, password)
 	if err != nil {
 		return Domain{}, err
 	}
-	// admin.Token, err = servAdmin.ConfigJWT.GenerateToken(admin.ID, "admin")
+	validPass := encrypt.CheckPasswordHash(password, admin.Password)
+	if !validPass {
+		return Domain{}, business.ErrWrongPassword
+	}
+	if err != nil {
+		return Domain{}, err
+	}
+	admin.Token = servAdmin.jwtAuth.GenerateToken(admin.ID, "admin")
 	if err != nil {
 		return Domain{}, err
 	}
 	return admin, nil
 }
 
-func (servAdmin *AdminService) Register(ctx context.Context, domain Domain) (Domain, error) {
+func (servAdmin *AdminService) Register(domain *Domain) (Domain, error) {
 	if domain.Username == "" {
-		return Domain{}, errors.New("username empty")
+		return Domain{}, business.ErrUsernameNotFound
 	}
 	if domain.Email == "" {
-		return Domain{}, errors.New("email empty")
+		return Domain{}, business.ErrEmailNotFound
 	}
 	if domain.Password == "" {
-		return Domain{}, errors.New("password empty")
+		return Domain{}, business.ErrPasswordNotFound
 	}
-	admin, err := servAdmin.repository.Register(ctx, domain)
+	encryptedPass, _ := encrypt.HashPassword(domain.Password)
+	domain.Password = encryptedPass
+	admin, err := servAdmin.repository.Register(domain)
 
 	if err != nil {
 		return Domain{}, err

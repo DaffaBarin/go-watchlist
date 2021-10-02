@@ -5,30 +5,32 @@ import (
 	"time"
 )
 
-type AdminRegisterResponse struct{
+type AdminRegisterResponse struct {
 	Message   string    `json:"message"`
+	ID        int       `json:"id:"`
+	Username  string    `json:"username"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-	Username  string    `json:"username"`
 }
 
 func FromDomainRegister(domain admins.Domain) AdminRegisterResponse {
 	return AdminRegisterResponse{
-		Message :  "Registration Success",
+		Message:   "Registration Success",
+		ID:        domain.ID,
+		Username:  domain.Username,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
-		Username:  domain.Username,
 	}
 }
 
-type AdminLoginResponse struct{
-	Message string    `json:"message"`
-	Token   string    `json:"token"`
+type AdminLoginResponse struct {
+	Message string `json:"message"`
+	Token   string `json:"token"`
 }
 
 func FromDomainLogin(domain admins.Domain) AdminLoginResponse {
 	return AdminLoginResponse{
-		Message : "Login Success",
-		Token   : domain.Token,
+		Message: "Login Success",
+		Token:   domain.Token,
 	}
 }

@@ -1,7 +1,6 @@
 package admins
 
 import (
-	"context"
 	"time"
 )
 
@@ -16,11 +15,11 @@ type Domain struct {
 }
 
 type Service interface {
-	Register(ctx context.Context, domain Domain) (Domain, error)
-	Login(ctx context.Context, email string, password string) (Domain, error)
+	Register(domain *Domain) (Domain, error)
+	Login(username string, password string) (Domain, error)
 }
 
 type Repository interface {
-	Register(ctx context.Context, domain Domain) (Domain, error)
-	Login(ctx context.Context, email string, password string) (Domain, error)
+	Register(domain *Domain) (Domain, error)
+	Login(username string, password string) (Domain, error)
 }
