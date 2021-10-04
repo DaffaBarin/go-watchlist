@@ -13,6 +13,10 @@ import (
 	_userController "go-watchlist/controllers/users"
 	_userRepo "go-watchlist/drivers/databases/users"
 
+	_mediaService "go-watchlist/business/medias"
+	_mediaController "go-watchlist/controllers/medias"
+	_mediaRepo "go-watchlist/drivers/databases/medias"
+
 	_dbDriver "go-watchlist/drivers/mysql"
 
 	_middleware "go-watchlist/app/middlewares"
@@ -39,6 +43,7 @@ func dbMigrate(db *gorm.DB) {
 	db.AutoMigrate(
 		&_adminRepo.Admins{},
 		&_userRepo.Users{},
+		&_mediaRepo.Medias{},
 	)
 }
 
@@ -69,9 +74,15 @@ func main() {
 	userService := _userService.NewUserService(userRepo, 10, &configJWT)
 	userCtrl := _userController.NewUserController(userService)
 
+	mediaRepo := _driverFactory.NewMediaRepository(db)
+	mediaService := _mediaService.NewMediaService(mediaRepo, 10)
+	mediaCtrl := _mediaController.NewMediaController(mediaService)
+
 	routesInit := _routes.ControllerList{
+		JwtConfig:       configJWT.Init(),
 		AdminController: *adminCtrl,
 		UserController:  *userCtrl,
+		MediaController: *mediaCtrl,
 	}
 
 	routesInit.RouteRegister(e)

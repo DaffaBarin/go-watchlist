@@ -7,6 +7,9 @@ import (
 	userDomain "go-watchlist/business/users"
 	userDB "go-watchlist/drivers/databases/users"
 
+	mediaDomain "go-watchlist/business/medias"
+	mediaDB "go-watchlist/drivers/databases/medias"
+
 	"gorm.io/gorm"
 )
 
@@ -16,4 +19,8 @@ func NewAdminRepository(conn *gorm.DB) adminDomain.Repository {
 
 func NewUserRepository(conn *gorm.DB) userDomain.Repository {
 	return userDB.NewMysqlUserRepository(conn)
+}
+
+func NewMediaRepository(conn *gorm.DB) mediaDomain.Repository {
+	return mediaDB.NewMysqlMediaRepository(conn)
 }
