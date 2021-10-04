@@ -3,6 +3,7 @@ module go-watchlist
 go 1.16
 
 require (
+	github.com/cyruzin/golang-tmdb v1.3.5 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/labstack/echo/v4 v4.6.1
 	github.com/labstack/gommon v0.3.0 // indirect
