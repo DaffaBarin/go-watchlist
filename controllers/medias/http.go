@@ -4,7 +4,7 @@ import (
 	"errors"
 	"go-watchlist/business/medias"
 	controller "go-watchlist/controllers"
-	request "go-watchlist/controllers/medias/request"
+	"go-watchlist/controllers/medias/request"
 	"go-watchlist/controllers/medias/response"
 	"go-watchlist/controllers/moviesGetter"
 	"net/http"

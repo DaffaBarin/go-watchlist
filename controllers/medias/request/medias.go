@@ -1,4 +1,4 @@
-package medias
+package request
 
 import (
 	"go-watchlist/business/medias"

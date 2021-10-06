@@ -30,6 +30,17 @@ func TransformMovie(req request.MediasCreate) (request.Medias, error) {
 	if err != nil {
 		return request.Medias{}, err
 	}
+	var genres string
+	if len(media.Genres) > 1 {
+		for i := range media.Genres {
+			genres = genres + "," + media.Genres[i].Name
+		}
+		genres = genres[1:]
+	} else if len(media.Genres) == 1 {
+		genres = media.Genres[0].Name
+	} else {
+		genres = ""
+	}
 	movie := request.Medias{
 		ID:                int(media.ID),
 		Type:              "Movie",
@@ -37,7 +48,7 @@ func TransformMovie(req request.MediasCreate) (request.Medias, error) {
 		Poster:            media.PosterPath,
 		Overview:          media.Overview,
 		Original_Language: media.OriginalLanguage,
-		Genres:            media.Genres[0].Name,
+		Genres:            genres,
 		Year:              media.ReleaseDate[:4],
 		Duration:          media.Runtime,
 	}
@@ -66,7 +77,17 @@ func TransformTV(req request.MediasCreate) (request.Medias, error) {
 	if err != nil {
 		return request.Medias{}, err
 	}
-
+	var genres string
+	if len(media.Genres) > 1 {
+		for i := range media.Genres {
+			genres = genres + "," + media.Genres[i].Name
+		}
+		genres = genres[1:]
+	} else if len(media.Genres) == 1 {
+		genres = media.Genres[0].Name
+	} else {
+		genres = ""
+	}
 	TV := request.Medias{
 		ID:                int(media.ID),
 		Type:              "TV",
@@ -74,7 +95,7 @@ func TransformTV(req request.MediasCreate) (request.Medias, error) {
 		Poster:            media.PosterPath,
 		Overview:          media.Overview,
 		Original_Language: media.OriginalLanguage,
-		Genres:            media.Genres[0].Name,
+		Genres:            genres,
 		Year:              media.FirstAirDate[:4],
 		Duration:          media.EpisodeRunTime[0],
 	}
