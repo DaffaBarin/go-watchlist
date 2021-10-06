@@ -20,8 +20,8 @@ type InsertWatchlistResponse struct {
 	Message string `json:"message"`
 }
 
-func FromDomainInsertWatchlistResponse(domain watchlists.Domain) CreateWatchlistResponse {
-	return CreateWatchlistResponse{
+func FromDomainInsertWatchlistResponse(domain watchlists.Domain) InsertWatchlistResponse {
+	return InsertWatchlistResponse{
 		Message: "Media Inserted to watchlist",
 	}
 }
