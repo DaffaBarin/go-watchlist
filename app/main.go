@@ -17,6 +17,10 @@ import (
 	_mediaController "go-watchlist/controllers/medias"
 	_mediaRepo "go-watchlist/drivers/databases/medias"
 
+	_watchlistService "go-watchlist/business/watchlists"
+	_watchlistController "go-watchlist/controllers/watchlists"
+	_watchlistRepo "go-watchlist/drivers/databases/watchlists"
+
 	_dbDriver "go-watchlist/drivers/mysql"
 
 	_middleware "go-watchlist/app/middlewares"
@@ -44,6 +48,7 @@ func dbMigrate(db *gorm.DB) {
 		&_adminRepo.Admins{},
 		&_userRepo.Users{},
 		&_mediaRepo.Medias{},
+		&_watchlistRepo.Watchlists{},
 	)
 }
 
@@ -78,11 +83,16 @@ func main() {
 	mediaService := _mediaService.NewMediaService(mediaRepo, 10)
 	mediaCtrl := _mediaController.NewMediaController(mediaService)
 
+	watchlistRepo := _driverFactory.NewWatchListRepository(db)
+	watchlistService := _watchlistService.NewWatchlistService(watchlistRepo, userRepo, mediaRepo, 10)
+	watchlistCtrl := _watchlistController.NewWatchlistController(watchlistService)
+
 	routesInit := _routes.ControllerList{
-		JwtConfig:       configJWT.Init(),
-		AdminController: *adminCtrl,
-		UserController:  *userCtrl,
-		MediaController: *mediaCtrl,
+		JwtConfig:           configJWT.Init(),
+		AdminController:     *adminCtrl,
+		UserController:      *userCtrl,
+		MediaController:     *mediaCtrl,
+		WatchlistController: *watchlistCtrl,
 	}
 
 	routesInit.RouteRegister(e)

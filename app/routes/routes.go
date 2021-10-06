@@ -7,6 +7,7 @@ import (
 	"go-watchlist/controllers/admins"
 	"go-watchlist/controllers/medias"
 	"go-watchlist/controllers/users"
+	"go-watchlist/controllers/watchlists"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -14,11 +15,12 @@ import (
 )
 
 type ControllerList struct {
-	JwtConfig       middleware.JWTConfig
-	JWTMiddleware   middleware.JWTConfig
-	AdminController admins.AdminController
-	UserController  users.UserController
-	MediaController medias.MediaController
+	JwtConfig           middleware.JWTConfig
+	JWTMiddleware       middleware.JWTConfig
+	AdminController     admins.AdminController
+	UserController      users.UserController
+	MediaController     medias.MediaController
+	WatchlistController watchlists.WatchlistController
 }
 
 func (cl *ControllerList) RouteRegister(e *echo.Echo) {
@@ -32,6 +34,11 @@ func (cl *ControllerList) RouteRegister(e *echo.Echo) {
 	users := e.Group("users")
 	users.POST("/register", cl.UserController.Register)
 	users.POST("/login", cl.UserController.Login)
+	users.POST("/watchlist", cl.WatchlistController.Create, middleware.JWTWithConfig(cl.JwtConfig), RoleValidationUser())
+	users.GET("/watchlist", cl.WatchlistController.GetAllByUserID, middleware.JWTWithConfig(cl.JwtConfig), RoleValidationUser())
+	users.GET("/watchlist/:id", cl.WatchlistController.GetByID, middleware.JWTWithConfig(cl.JwtConfig), RoleValidationUser())
+	users.POST("/watchlist/:id", cl.WatchlistController.InsertMedia, middleware.JWTWithConfig(cl.JwtConfig), RoleValidationUser())
+	users.PUT("/watchlist/:watchlist/:media", cl.WatchlistController.UpdateMedia, middleware.JWTWithConfig(cl.JwtConfig), RoleValidationUser())
 
 	medias := e.Group("medias")
 	medias.GET("/", cl.MediaController.GetAll, middleware.JWTWithConfig(cl.JwtConfig), RoleValidationUser())
