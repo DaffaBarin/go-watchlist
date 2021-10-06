@@ -7,11 +7,11 @@
 		"timeout": 2
 	},
 	"database": {
-		"host": "localhost",
+		"host": "s29oj5odr85rij2o.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
 		"port": "3306",
-		"user": "root",
-		"pass": "barin12345",
-		"name": "go-watchlistAPI"
+		"user": "zuk3pwaqh1i8kenv",
+		"pass": "wpklxkcepmrydkzy",
+		"name": "oxv2mwuxxktbaf2t"
 	},
 	"jwt": {
 		"secret": "rahasiabebek",
