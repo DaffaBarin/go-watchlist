@@ -28,7 +28,6 @@ func (ctrl *WatchlistController) Create(c echo.Context) error {
 	if err := c.Bind(&req); err != nil {
 		return controller.NewErrorResponse(c, http.StatusBadRequest, err)
 	}
-	req.ToDomain()
 	user := middlewares.GetUser(c)
 	data, err := ctrl.WatchlistService.Create(user.ID, req.ToDomain())
 	if err != nil {

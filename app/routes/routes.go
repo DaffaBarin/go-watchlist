@@ -16,7 +16,6 @@ import (
 
 type ControllerList struct {
 	JwtConfig           middleware.JWTConfig
-	JWTMiddleware       middleware.JWTConfig
 	AdminController     admins.AdminController
 	UserController      users.UserController
 	MediaController     medias.MediaController

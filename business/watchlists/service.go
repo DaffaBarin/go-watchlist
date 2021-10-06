@@ -11,7 +11,7 @@ import (
 type WatchlistService struct {
 	repository      Repository
 	userRepository  users.Repository
-	medaiRepository medias.Repository
+	mediaRepository medias.Repository
 	contextTimeout  time.Duration
 }
 
@@ -19,7 +19,7 @@ func NewWatchlistService(repo Repository, userRepo users.Repository, medaiRepo m
 	return &WatchlistService{
 		repository:      repo,
 		userRepository:  userRepo,
-		medaiRepository: medaiRepo,
+		mediaRepository: medaiRepo,
 		contextTimeout:  timeout,
 	}
 }
