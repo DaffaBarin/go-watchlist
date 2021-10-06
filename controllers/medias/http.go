@@ -6,7 +6,7 @@ import (
 	controller "go-watchlist/controllers"
 	"go-watchlist/controllers/medias/request"
 	"go-watchlist/controllers/medias/response"
-	"go-watchlist/controllers/moviesGetter"
+	"go-watchlist/drivers/thirdparties/tmdb"
 	"net/http"
 
 	"strconv"
@@ -32,9 +32,9 @@ func (ctrl *MediaController) Create(c echo.Context) error {
 	}
 	// panggil third party, ubah req ke data tmdb
 	if req.Media_Type == "Movie" {
-		res, _ = moviesGetter.TransformMovie(req)
+		res, _ = tmdb.TransformMovie(req)
 	} else if req.Media_Type == "Tv" {
-		res, _ = moviesGetter.TransformTV(req)
+		res, _ = tmdb.TransformTV(req)
 	}
 	data, err := ctrl.MediaService.Create(res.ToDomain())
 	if data.ID == 0 {

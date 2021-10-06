@@ -1,4 +1,4 @@
-package moviesGetter
+package tmdb
 
 import (
 	request "go-watchlist/controllers/medias/request"
