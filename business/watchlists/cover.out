@@ -1,0 +1,17 @@
+mode: set
+go-watchlist/business/watchlists/service.go:18.130,25.2 1 1
+go-watchlist/business/watchlists/service.go:28.91,31.16 2 1
+go-watchlist/business/watchlists/service.go:35.2,35.19 1 1
+go-watchlist/business/watchlists/service.go:31.16,33.3 1 0
+go-watchlist/business/watchlists/service.go:38.85,41.21 2 1
+go-watchlist/business/watchlists/service.go:45.2,45.19 1 1
+go-watchlist/business/watchlists/service.go:41.21,43.3 1 0
+go-watchlist/business/watchlists/service.go:48.80,51.16 2 1
+go-watchlist/business/watchlists/service.go:55.2,55.19 1 1
+go-watchlist/business/watchlists/service.go:51.16,53.3 1 0
+go-watchlist/business/watchlists/service.go:58.94,61.16 2 1
+go-watchlist/business/watchlists/service.go:65.2,65.19 1 1
+go-watchlist/business/watchlists/service.go:61.16,63.3 1 0
+go-watchlist/business/watchlists/service.go:68.110,71.16 2 1
+go-watchlist/business/watchlists/service.go:75.2,75.19 1 1
+go-watchlist/business/watchlists/service.go:71.16,73.3 1 0

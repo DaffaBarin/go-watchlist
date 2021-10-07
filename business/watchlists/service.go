@@ -15,11 +15,11 @@ type WatchlistService struct {
 	contextTimeout  time.Duration
 }
 
-func NewWatchlistService(repo Repository, userRepo users.Repository, medaiRepo medias.Repository, timeout time.Duration) Service {
+func NewWatchlistService(repo Repository, userRepo users.Repository, mediaRepo medias.Repository, timeout time.Duration) Service {
 	return &WatchlistService{
 		repository:      repo,
 		userRepository:  userRepo,
-		mediaRepository: medaiRepo,
+		mediaRepository: mediaRepo,
 		contextTimeout:  timeout,
 	}
 }
@@ -38,7 +38,7 @@ func (servWatchlist *WatchlistService) Create(userID int, domain *Domain) (Domai
 func (servWatchlist *WatchlistService) GetAllByUserID(userID int) ([]Domain, error) {
 
 	media, _ := servWatchlist.repository.GetAllByUserID(userID)
-	if media == nil {
+	if len(media) == 0 {
 		return nil, business.ErrNotFound
 	}
 

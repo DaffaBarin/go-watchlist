@@ -25,39 +25,33 @@ func NewAdminService(repo Repository, timeout time.Duration, jwtauth *middleware
 // Business logic for register and login
 func (servAdmin *AdminService) Login(username, password string) (Domain, error) {
 	if username == "" {
-		return Domain{}, business.ErrUsernameNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 	if password == "" {
-		return Domain{}, business.ErrPasswordNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 
 	admin, err := servAdmin.repository.Login(username, password)
 	if err != nil {
-		return Domain{}, err
+		return Domain{}, business.ErrUser
 	}
 	validPass := encrypt.CheckPasswordHash(password, admin.Password)
 	if !validPass {
-		return Domain{}, business.ErrWrongPassword
-	}
-	if err != nil {
-		return Domain{}, err
+		return Domain{}, business.ErrUser
 	}
 	admin.Token = servAdmin.jwtAuth.GenerateToken(admin.ID, "admin")
-	if err != nil {
-		return Domain{}, err
-	}
 	return admin, nil
 }
 
 func (servAdmin *AdminService) Register(domain *Domain) (Domain, error) {
 	if domain.Username == "" {
-		return Domain{}, business.ErrUsernameNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 	if domain.Email == "" {
-		return Domain{}, business.ErrEmailNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 	if domain.Password == "" {
-		return Domain{}, business.ErrPasswordNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 	encryptedPass, _ := encrypt.HashPassword(domain.Password)
 	domain.Password = encryptedPass

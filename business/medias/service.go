@@ -32,7 +32,7 @@ func (servAdmin *MediaService) Create(domain *Domain) (Domain, error) {
 func (servAdmin *MediaService) GetAll() ([]Domain, error) {
 
 	media, _ := servAdmin.repository.GetAll()
-	if media == nil {
+	if len(media) == 0 {
 		return nil, business.ErrNotFound
 	}
 
