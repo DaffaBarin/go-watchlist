@@ -1,0 +1,20 @@
+mode: set
+go-watchlist/business/users/service.go:17.101,23.2 1 1
+go-watchlist/business/users/service.go:26.79,27.20 1 1
+go-watchlist/business/users/service.go:30.2,30.20 1 1
+go-watchlist/business/users/service.go:34.2,35.16 2 1
+go-watchlist/business/users/service.go:38.2,39.16 2 1
+go-watchlist/business/users/service.go:42.2,43.18 2 1
+go-watchlist/business/users/service.go:27.20,29.3 1 1
+go-watchlist/business/users/service.go:30.20,32.3 1 1
+go-watchlist/business/users/service.go:35.16,37.3 1 0
+go-watchlist/business/users/service.go:39.16,41.3 1 1
+go-watchlist/business/users/service.go:46.71,47.27 1 1
+go-watchlist/business/users/service.go:50.2,50.24 1 1
+go-watchlist/business/users/service.go:53.2,53.27 1 1
+go-watchlist/business/users/service.go:56.2,60.16 4 1
+go-watchlist/business/users/service.go:63.2,63.18 1 1
+go-watchlist/business/users/service.go:47.27,49.3 1 1
+go-watchlist/business/users/service.go:50.24,52.3 1 1
+go-watchlist/business/users/service.go:53.27,55.3 1 1
+go-watchlist/business/users/service.go:60.16,62.3 1 0

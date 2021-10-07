@@ -25,10 +25,10 @@ func NewUserService(repo Repository, timeout time.Duration, jwtauth *middlewares
 // Business logic for register and login
 func (servUser *UserService) Login(username, password string) (Domain, error) {
 	if username == "" {
-		return Domain{}, business.ErrUsernameNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 	if password == "" {
-		return Domain{}, business.ErrPasswordNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 
 	user, err := servUser.repository.Login(username, password)
@@ -37,27 +37,21 @@ func (servUser *UserService) Login(username, password string) (Domain, error) {
 	}
 	validPass := encrypt.CheckPasswordHash(password, user.Password)
 	if !validPass {
-		return Domain{}, business.ErrWrongPassword
-	}
-	if err != nil {
-		return Domain{}, err
+		return Domain{}, business.ErrUser
 	}
 	user.Token = servUser.jwtAuth.GenerateToken(user.ID, "user")
-	if err != nil {
-		return Domain{}, err
-	}
 	return user, nil
 }
 
 func (servUser *UserService) Register(domain *Domain) (Domain, error) {
 	if domain.Username == "" {
-		return Domain{}, business.ErrUsernameNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 	if domain.Email == "" {
-		return Domain{}, business.ErrEmailNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 	if domain.Password == "" {
-		return Domain{}, business.ErrPasswordNotFound
+		return Domain{}, business.ErrEmptyForm
 	}
 	encryptedPass, _ := encrypt.HashPassword(domain.Password)
 	domain.Password = encryptedPass

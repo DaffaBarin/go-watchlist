@@ -11,11 +11,7 @@ var (
 
 	ErrDuplicateData = errors.New("duplicate data")
 
-	ErrUsernameNotFound = errors.New("username empty")
+	ErrEmptyForm = errors.New("fill all required form")
 
-	ErrEmailNotFound = errors.New("email empty")
-
-	ErrPasswordNotFound = errors.New("password empty")
-
-	ErrWrongPassword = errors.New("password wrong")
+	ErrUser = errors.New("username or password wrong")
 )
