@@ -1,0 +1,20 @@
+{
+	"debug": true,
+	"server": {
+		"address": ":8000"
+	},
+	"context": {
+		"timeout": 2
+	},
+	"database": {
+		"host": "localhost",
+		"port": "3306",
+		"user": "root",
+		"pass": "barin12345",
+		"name": "go-watchlistAPI"
+	},
+	"jwt": {
+		"secret": "rahasiabebek",
+		"expired": 1
+	}
+}
